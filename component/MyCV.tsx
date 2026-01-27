@@ -4,8 +4,14 @@ import { type ResumeData } from '../interfaces/resumeData';
 import { useState } from 'react';
 
 // Импортируем иконки (установите react-icons: npm install react-icons)
-import { FaPhone, FaWhatsapp, FaTelegram, FaEnvelope } from 'react-icons/fa';
+import { FaPhone, FaWhatsapp, FaTelegram, FaEnvelope, FaFileDownload } from 'react-icons/fa';
+
 import { SiViber } from 'react-icons/si';
+
+import { IconContext } from "react-icons";
+
+import profilePhoto from '../src/photo/photo.jpg';
+import React from 'react';
 
 interface MyCVProps {
   data: ResumeData;
@@ -59,34 +65,77 @@ function MyCV({ data }: MyCVProps) {
     setShowPhoneMenu(false);
   };
 
-  return (
+  const handleDownloadCV = () => {
+    const link = document.createElement('a');
+    link.href = profilePhoto;
+    link.download = 'bulatov_cv.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  React.useEffect(() => {
+    const handleClickOutside = () => {
+      if (showPhoneMenu) {
+        setShowPhoneMenu(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [showPhoneMenu]);
+
+
+return (
     <div className="cv-container">
       <div className="cv-grid">
-        {/* Заголовок документа */}
         <div className="doc-name">{docName}</div>
-
-        {/* Личная информация */}
-        <div className="cv-card">
-          <div className="personal-info">
-            <h1 className="full-name">{personalInfo.fullName}</h1>
-            <div className="personal-details">
-              <div className="detail-item">
-                <strong>Дата рождения</strong>
-                {personalInfo.birthDate}
-              </div>
-              <div className="detail-item">
-                <strong>Семейное положение</strong>
-                {personalInfo.maritalStatus}
-              </div>
-              <div className="detail-item">
-                <strong>Проживание</strong>
-                {personalInfo.location}
+        
+        <div className="cv-card personal-section">
+          <div className="profile-header">
+            <div className="profile-photo-container">
+              <img 
+                src={profilePhoto} 
+                alt={personalInfo.fullName}
+                className="profile-photo"
+              />
+              <div className="photo-badge">Доступен для работы</div>
+            </div>
+            
+            <div className="profile-info">
+              <h1 className="full-name">{personalInfo.fullName}</h1>
+              <div className="profile-title">Специалист по управлению проектами АЭС</div>
+              
+              <div className="personal-details-grid">
+                <div className="personal-detail-item">
+                  <strong>Дата рождения</strong>
+                  <span>{personalInfo.birthDate}</span>
+                </div>
+                <div className="personal-detail-item">
+                  <strong>Семейное положение</strong>
+                  <span>{personalInfo.maritalStatus}</span>
+                </div>
+                <div className="personal-detail-item">
+                  <strong>Проживание</strong>
+                  <span>{personalInfo.location}</span>
+                </div>
+                <div className="personal-detail-item">
+                  <strong>Статус</strong>
+                  <span className="status-available">Ищу новые возможности</span>
+                </div>
               </div>
             </div>
           </div>
 
+          <div className="download-section">
+            <button className="download-btn" onClick={handleDownloadCV}>
+              <FaFileDownload /> Скачать резюме
+            </button>
+          </div>
+
           <div className="contacts-grid">
-            {/* Телефон с выпадающим меню */}
             <div className="contact-item phone-item" onClick={handlePhoneClick}>
               <div className="contact-icon">
                 <FaPhone />
@@ -94,6 +143,7 @@ function MyCV({ data }: MyCVProps) {
               <div className="contact-content">
                 <strong>Тел.</strong>
                 <span>+90 (533) 145-84-81</span>
+                <span className="contact-hint">Нажмите для выбора способа звонка</span>
               </div>
               {showPhoneMenu && (
                 <div className="phone-menu">
@@ -113,53 +163,95 @@ function MyCV({ data }: MyCVProps) {
               )}
             </div>
 
-            {/* WhatsApp */}
             <div className="contact-item" onClick={handleWhatsAppClick}>
               <div className="contact-icon whatsapp">
-                <FaWhatsapp />
+                <IconContext.Provider 
+                  value={{ 
+                    color: "#25D366", 
+                    className: "global-class-name",
+                    size: "2.5em"
+                  }}>
+                  <div>
+                    <FaWhatsapp />
+                  </div>
+                </IconContext.Provider>;
               </div>
               <div className="contact-content">
                 <strong>WhatsApp</strong>
                 <span>+90 (533) 145-84-81</span>
+                <span className="contact-hint">Открыть в WhatsApp</span>
               </div>
             </div>
 
-            {/* Telegram */}
+
+
             <div className="contact-item" onClick={handleTelegramClick}>
               <div className="contact-icon telegram">
-                <FaTelegram />
+                <IconContext.Provider 
+                  value={{ 
+                    color: "#0088cc",
+                    className: "global-class-name",
+                    size: "2.5em"
+                  }}>
+                  <div>
+                    <FaTelegram />
+                  </div>
+                </IconContext.Provider>;
               </div>
+              
               <div className="contact-content">
                 <strong>Telegram</strong>
                 <span>@bulati4</span>
+                <span className="contact-hint">Открыть в Telegram</span>
               </div>
             </div>
 
-            {/* Viber */}
             <div className="contact-item" onClick={handleViberClick}>
               <div className="contact-icon viber">
-                <SiViber />
+
+                <IconContext.Provider 
+                  value={{ 
+                    color: "#7360F2",
+                    className: "global-class-name",
+                    size: "2.5em"
+                  }}>
+                  <div>
+                    <SiViber />
+                  </div>
+                </IconContext.Provider>;
+
+
+
               </div>
               <div className="contact-content">
                 <strong>Viber</strong>
                 <span>+90 (533) 145-84-81</span>
+                <span className="contact-hint">Открыть в Viber</span>
               </div>
             </div>
 
-            {/* Email */}
             <div className="contact-item" onClick={handleEmailClick}>
               <div className="contact-icon email">
-                <FaEnvelope />
+                <IconContext.Provider 
+                  value={{ 
+                    color: "#EA4335",
+                    className: "global-class-name",
+                    size: "2.5em"
+                  }}>
+                  <div>
+                    <FaEnvelope />
+                  </div>
+                </IconContext.Provider>;
               </div>
               <div className="contact-content">
                 <strong>E-mail</strong>
                 <span>bulati4@mail.ru</span>
+                <span className="contact-hint">Написать письмо</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Остальные секции без изменений */}
         <div className="cv-card">
           <h2 className="section-title">Образование</h2>
           <div className="education-grid">
@@ -223,7 +315,7 @@ function MyCV({ data }: MyCVProps) {
                 ))}
               </div>
             </div>
-
+            
             <div className="info-section">
               <h3>Достижения</h3>
               <div className="skills-grid">
@@ -232,7 +324,7 @@ function MyCV({ data }: MyCVProps) {
                 ))}
               </div>
             </div>
-
+            
             <div className="info-section">
               <h3>Языки</h3>
               {additionalInfo.languages.map((lang, idx) => (
@@ -242,7 +334,7 @@ function MyCV({ data }: MyCVProps) {
                 </div>
               ))}
             </div>
-
+            
             <div className="info-section">
               <h3>Личные качества</h3>
               <div className="qualities-grid">

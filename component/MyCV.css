@@ -1,15 +1,17 @@
-/* MyCV.css */
-
 /* Основной контейнер */
 .cv-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px;
+  padding: 40px 20px;
   font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   color: #333;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   min-height: 100vh;
   line-height: 1.6;
+}
+
+.react-icons {
+  vertical-align: middle;
 }
 
 /* Сетка для основных секций */
@@ -46,78 +48,355 @@
   opacity: 0.8;
 }
 
-/* Личная информация */
-.personal-info {
+/* Стили для фото профиля */
+.personal-section {
+  position: relative;
+  overflow: visible;
+}
+
+.profile-header {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .profile-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.profile-photo-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border: 5px solid white;
+  transition: all 0.4s ease;
+  justify-self: center;
+}
+
+.profile-photo-container:hover {
+  transform: scale(1.03);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+
+.profile-photo-container:hover .profile-photo {
+  transform: scale(1.05);
+}
+
+.photo-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+  color: white;
+  padding: 10px;
   text-align: center;
-  margin-bottom: 50px;
-  padding-bottom: 30px;
-  border-bottom: 2px solid #e74c3c;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Информация профиля */
+.profile-info {
+  padding-top: 10px;
 }
 
 .full-name {
-  font-size: 3rem;
+  font-size: 2.8rem;
   font-weight: 700;
   color: #2c3e50;
-  margin-bottom: 20px;
-  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+  line-height: 1.1;
 }
 
-.personal-details {
+.profile-title {
+  font-size: 1.4rem;
+  color: #7f8c8d;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+  font-weight: 500;
+}
+
+.personal-details-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
-  margin-top: 30px;
-  padding: 25px;
+  margin-top: 25px;
+}
+
+.personal-detail-item {
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 15px;
   border-radius: 12px;
+  border-left: 4px solid #3498db;
 }
 
-.detail-item {
-  font-size: 1.1rem;
-  color: #34495e;
-}
-
-.detail-item strong {
+.personal-detail-item strong {
+  display: block;
   color: #2c3e50;
   font-weight: 600;
-  display: block;
-  margin-bottom: 5px;
-  font-size: 0.95rem;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-/* Контакты */
+.personal-detail-item span {
+  color: #555;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.status-available {
+  color: #2ecc71 !important;
+  font-weight: 600 !important;
+  animation: blink 3s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Секция скачивания */
+.download-section {
+  text-align: center;
+  margin: 30px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 15px;
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  border: none;
+  padding: 15px 35px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+}
+
+.download-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(52, 152, 219, 0.4);
+}
+
+.download-btn:active {
+  transform: translateY(-1px);
+}
+
+.download-btn svg {
+  font-size: 1.2rem;
+}
+
+/* Стили для контактов */
 .contacts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
-  margin-top: 25px;
-  padding: 25px;
-  background: white;
-  border-radius: 12px;
-  border-left: 4px solid #3498db;
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px solid #f0f0f0;
 }
 
 .contact-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  background: #f8f9fa;
-  border-radius: 10px;
+  gap: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 15px;
+  cursor: pointer;
   transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, currentColor 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.contact-item:hover::before {
+  opacity: 1;
 }
 
 .contact-item:hover {
-  background: #e3f2fd;
-  transform: translateX(5px);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 0, 0, 0.05);
 }
 
-.contact-item strong {
-  color: #2980b9;
+.contact-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  font-size: 1.6rem;
+  color: white;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover .contact-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Цвета иконок */
+.phone-item .contact-icon {
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+}
+
+.whatsapp .contact-icon {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+}
+
+.telegram .contact-icon {
+  background: linear-gradient(135deg, #0088cc 0%, #005c8a 100%);
+}
+
+.viber .contact-icon {
+  background: linear-gradient(135deg, #7360F2 0%, #6652d9 100%);
+}
+
+.email .contact-icon {
+  background: linear-gradient(135deg, #EA4335 0%, #d63a2d 100%);
+}
+
+.contact-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-content strong {
+  display: block;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.contact-content span {
+  display: block;
+  color: #555;
+  font-size: 1.1rem;
   font-weight: 600;
-  min-width: 90px;
+}
+
+.contact-hint {
+  font-size: 0.85rem !important;
+  color: #7f8c8d !important;
+  font-weight: 500 !important;
+  margin-top: 5px !important;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+/* Выпадающее меню для телефона */
+.phone-item {
+  position: relative;
+}
+
+.phone-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  margin-top: 10px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.phone-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #2c3e50;
+  font-size: 0.95rem;
+}
+
+.phone-menu-item:hover {
+  background: #f8f9fa;
+  color: #007aff;
+}
+
+.phone-menu-item svg {
+  color: #007aff;
+  font-size: 1.1rem;
 }
 
 /* Образование */
@@ -365,8 +644,22 @@
     padding: 20px;
   }
   
+  .profile-photo-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+  }
+  
   .full-name {
     font-size: 2.2rem;
+  }
+  
+  .profile-title {
+    font-size: 1.2rem;
+  }
+  
+  .personal-details-grid {
+    grid-template-columns: 1fr;
   }
   
   .education-item,
@@ -390,6 +683,27 @@
   
   .section-title {
     font-size: 1.8rem;
+  }
+  
+  .contact-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+  
+  .contacts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .phone-menu {
+    position: fixed;
+    left: 20px;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: calc(100% - 40px);
+    max-height: 80vh;
+    overflow-y: auto;
   }
 }
 
@@ -415,166 +729,13 @@
 .cv-card:nth-child(4) { animation-delay: 0.4s; }
 .cv-card:nth-child(5) { animation-delay: 0.5s; }
 
-
-/* Стили для контактов */
-.contacts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
-  margin-top: 25px;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 18px 20px;
-  background: white;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  position: relative;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.contact-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.contact-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  font-size: 1.3rem;
-  color: white;
-}
-
-.contact-icon svg {
-  font-size: 1.4rem;
-}
-
-/* Цвета иконок */
-.phone-item .contact-icon {
-  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
-}
-
-.whatsapp .contact-icon {
-  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-}
-
-.telegram .contact-icon {
-  background: linear-gradient(135deg, #0088cc 0%, #005c8a 100%);
-}
-
-.viber .contact-icon {
-  background: linear-gradient(135deg, #7360F2 0%, #6652d9 100%);
-}
-
-.email .contact-icon {
-  background: linear-gradient(135deg, #EA4335 0%, #d63a2d 100%);
-}
-
-.contact-content {
-  flex: 1;
-}
-
-.contact-content strong {
-  display: block;
-  color: #2c3e50;
-  font-weight: 600;
-  margin-bottom: 4px;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.contact-content span {
-  color: #555;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-/* Выпадающее меню для телефона */
-.phone-item {
-  position: relative;
-}
-
-.phone-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: white;
-  border-radius: 12px;
-  margin-top: 10px;
-  padding: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.phone-menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #2c3e50;
-  font-size: 0.95rem;
-}
-
-.phone-menu-item:hover {
-  background: #f8f9fa;
-  color: #007aff;
-}
-
-.phone-menu-item svg {
-  color: #007aff;
-  font-size: 1.1rem;
-}
-
-/* Адаптивность для контактов */
-@media (max-width: 768px) {
-  .contacts-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .contact-item {
-    padding: 15px;
-  }
-  
-  .phone-menu {
-    position: fixed;
-    left: 20px;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    max-width: calc(100% - 40px);
-    max-height: 80vh;
-    overflow-y: auto;
-  }
-}
-
 /* Эффект нажатия */
 .contact-item:active {
   transform: scale(0.98);
+}
+
+/* Убираем выделение при клике */
+.contact-item {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
