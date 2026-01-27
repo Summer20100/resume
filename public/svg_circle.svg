@@ -1,0 +1,30 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2C3E50" />
+      <stop offset="100%" stop-color="#3498DB" />
+    </linearGradient>
+    
+    <linearGradient id="innerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2980B9" />
+      <stop offset="100%" stop-color="#1ABC9C" />
+    </linearGradient>
+  </defs>
+  
+  
+  <circle cx="32" cy="32" r="30" fill="url(#gradient)" stroke="#E74C3C" stroke-width="2"/>
+  
+  
+  <path d="M32 12 L44 28 L38 44 L26 44 L20 28 Z" fill="url(#innerGradient)" opacity="0.9"/>
+  
+  
+  <circle cx="32" cy="32" r="6" fill="#F39C12"/>
+  
+  
+  <circle cx="32" cy="32" r="20" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+  <circle cx="32" cy="32" r="15" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-dasharray="2,2" opacity="0.4"/>
+  
+  
+  <text x="32" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="50" fill="white">Б</text>
+</svg>

@@ -11,6 +11,7 @@ import { SiViber } from 'react-icons/si';
 import { IconContext } from "react-icons";
 
 import profilePhoto from '../src/photo/photo.jpg';
+import profilePDF from '../files/Резюме_Д.В.Булатов.pdf';
 import React from 'react';
 
 interface MyCVProps {
@@ -67,8 +68,8 @@ function MyCV({ data }: MyCVProps) {
 
   const handleDownloadCV = () => {
     const link = document.createElement('a');
-    link.href = profilePhoto;
-    link.download = 'bulatov_cv.jpg';
+    link.href = profilePDF;
+    link.download = 'Резюме_Д.В.Булатов.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
