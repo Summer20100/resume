@@ -25,22 +25,30 @@ function MyCV({ data }: MyCVProps) {
 
   // Функции для обработки кликов
   const handlePhoneClick = () => {
-    setShowPhoneMenu(!showPhoneMenu);
+    const phoneNumber = '+79162878906';
+    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      window.location.href = `tel:${phoneNumber}`;
+    } else {
+      navigator.clipboard.writeText(phoneNumber);
+      alert('Номер скопирован в буфер обмена');
+    }
   };
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = '+905331458481';
+    const phoneNumber = '+79162878906';
     window.open(`https://wa.me/${phoneNumber}`, '_blank');
   };
 
   const handleTelegramClick = () => {
-    const username = 'bulati4'; // Замените на ваш username
+    const username = 'SummerSunny20100';
     window.open(`https://t.me/${username}`, '_blank');
   };
 
-  const handleViberClick = () => {
-    const phoneNumber = '+905331458481';
-    window.open(`viber://chat?number=${phoneNumber}`, '_blank');
+  const handleMaxClick = () => {
+    const maxUsername = "f9LHodD0cOLjrVBcENU48cwN53hrMd773vOx94bpUY8V5kqZlT7Hl7EauOo"; 
+    const profileLink = `https://max.ru/u/${maxUsername}`;
+    
+    window.location.href = profileLink;
   };
 
   const handleEmailClick = () => {
@@ -48,19 +56,10 @@ function MyCV({ data }: MyCVProps) {
   };
 
   const handleCall = (method: string) => {
-    const phoneNumber = '+905331458481';
+    const phoneNumber = '+79162878906';
     switch (method) {
       case 'mobile':
         window.open(`tel:${phoneNumber}`);
-        break;
-      case 'skype':
-        window.open(`skype:${phoneNumber}?call`);
-        break;
-      case 'facetime':
-        window.open(`facetime:${phoneNumber}`);
-        break;
-      case 'viber-out':
-        window.open(`viber://calls?number=${phoneNumber}`);
         break;
     }
     setShowPhoneMenu(false);
@@ -143,22 +142,13 @@ return (
               </div>
               <div className="contact-content">
                 <strong>Тел.</strong>
-                <span>+90 (533) 145-84-81</span>
+                <span>+7 (916) 287-89-06</span>
                 <span className="contact-hint">Нажмите для выбора способа звонка</span>
               </div>
               {showPhoneMenu && (
                 <div className="phone-menu">
                   <div className="phone-menu-item" onClick={() => handleCall('mobile')}>
                     <FaPhone /> Позвонить с телефона
-                  </div>
-                  <div className="phone-menu-item" onClick={() => handleCall('skype')}>
-                    <FaPhone /> Позвонить через Skype
-                  </div>
-                  <div className="phone-menu-item" onClick={() => handleCall('facetime')}>
-                    <FaPhone /> Позвонить через FaceTime
-                  </div>
-                  <div className="phone-menu-item" onClick={() => handleCall('viber-out')}>
-                    <SiViber /> Позвонить через Viber Out
                   </div>
                 </div>
               )}
@@ -184,8 +174,6 @@ return (
               </div>
             </div>
 
-
-
             <div className="contact-item" onClick={handleTelegramClick}>
               <div className="contact-icon telegram">
                 <IconContext.Provider 
@@ -202,34 +190,34 @@ return (
               
               <div className="contact-content">
                 <strong>Telegram</strong>
-                <span>@bulati4</span>
+                <span>@SummerSunny20100</span>
                 <span className="contact-hint">Открыть в Telegram</span>
               </div>
             </div>
 
-            <div className="contact-item" onClick={handleViberClick}>
-              <div className="contact-icon viber">
-
-                <IconContext.Provider 
-                  value={{ 
-                    color: "#7360F2",
-                    className: "global-class-name",
-                    size: "2.5em"
-                  }}>
-                  <div>
-                    <SiViber />
-                  </div>
-                </IconContext.Provider>;
 
 
-
-              </div>
+            <div className="contact-item" onClick={handleMaxClick}>
+              <div 
+                className="contact-icon max" 
+                style={{
+                  width: '2.5em',
+                  height: '2.5em',
+                  backgroundImage: 'url(https://logo-teka.com/wp-content/uploads/2025/07/max-messenger-sign-logo.svg)',
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center'
+                }}
+              />
               <div className="contact-content">
-                <strong>Viber</strong>
-                <span>+90 (533) 145-84-81</span>
-                <span className="contact-hint">Открыть в Viber</span>
+                <strong>MAX</strong>
+                <span>+7 (916) 287-89-06</span>
+                <span className="contact-hint">Открыть в MAX</span>
               </div>
             </div>
+
+
+
 
             <div className="contact-item" onClick={handleEmailClick}>
               <div className="contact-icon email">
