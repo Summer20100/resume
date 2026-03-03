@@ -1,16 +1,13 @@
-// MyCV.tsx
 import './MyCV.css';
 import { type ResumeData } from '../interfaces/resumeData';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-// Импортируем иконки (установите react-icons: npm install react-icons)
+// Импортируем иконки
 import { FaPhone, FaWhatsapp, FaTelegram, FaEnvelope, FaFileDownload } from 'react-icons/fa';
-
 import { IconContext } from "react-icons";
 
 import profilePhoto from '../src/photo/photo.jpg';
 import profilePDF from '../files/Резюме_Д.В.Булатов.pdf';
-import React from 'react';
 
 interface MyCVProps {
   data: ResumeData;
@@ -21,9 +18,14 @@ function MyCV({ data }: MyCVProps) {
   const { docName, personalInfo, education, workExperience, trainings, additionalInfo } = resume;
   const [showPhoneMenu, setShowPhoneMenu] = useState(false);
 
+  // Контактные данные из personalInfo
+  const phoneNumber = personalInfo.contacts.find(c => c.type === "Тел.")?.value.replace(/[^\d+]/g, '') || '+79162878906';
+  const whatsappNumber = personalInfo.contacts.find(c => c.type === "WhatsApp")?.value.replace(/[^\d+]/g, '') || '+79162878906';
+  const telegramValue = personalInfo.contacts.find(c => c.type === "Telegramm")?.value || '@SummerSunny20100';
+  const emailValue = personalInfo.contacts.find(c => c.type === "E-mail")?.value || 'bulati4@mail.ru';
+
   // Функции для обработки кликов
   const handlePhoneClick = () => {
-    const phoneNumber = '+79162878906';
     if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
       window.location.href = `tel:${phoneNumber}`;
     } else {
@@ -33,32 +35,37 @@ function MyCV({ data }: MyCVProps) {
   };
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = '+79162878906';
-    window.open(`https://wa.me/${phoneNumber}`, '_blank');
+    window.open(`https://wa.me/${whatsappNumber}`, '_blank');
   };
 
+
   const handleTelegramClick = () => {
-    const username = 'SummerSunny20100';
-    window.open(`https://t.me/${username}`, '_blank');
+    const telegramUsername = telegramValue.replace('@', '');
+    window.open(`https://t.me/${telegramUsername}`, '_blank');
   };
 
   const handleMaxClick = () => {
-    const maxUsername = "f9LHodD0cOLjrVBcENU48cwN53hrMd773vOx94bpUY8V5kqZlT7Hl7EauOo"; 
-    const profileLink = `https://max.ru/u/${maxUsername}`;
-    
-    window.location.href = profileLink;
+    const maxUsername = "f9LHodD0cOLjrVBcENU48cwN53hrMd773vOx94bpUY8V5kqZlT7Hl7EauOo";
+    window.open(`https://max.ru/u/${maxUsername}`, '_blank');
   };
 
-  const handleEmailClick = () => {
-    window.location.href = 'mailto:bulati4@mail.ru';
-  };
+const handleEmailClick = () => {
+  if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    window.location.href = `mailto:${emailValue}`;
+  } else {
+    const mailtoLink = document.createElement('a');
+    mailtoLink.href = `mailto:${emailValue}`;
+    mailtoLink.click();
+    setTimeout(() => {
+      navigator.clipboard.writeText(emailValue);
+      alert('Email скопирован в буфер обмена (почтовый клиент не открылся)');
+    }, 500);
+  }
+};
 
   const handleCall = (method: string) => {
-    const phoneNumber = '+79162878906';
-    switch (method) {
-      case 'mobile':
-        window.open(`tel:${phoneNumber}`);
-        break;
+    if (method === 'mobile') {
+      window.open(`tel:${phoneNumber}`);
     }
     setShowPhoneMenu(false);
   };
@@ -72,9 +79,10 @@ function MyCV({ data }: MyCVProps) {
     document.body.removeChild(link);
   };
 
-  React.useEffect(() => {
-    const handleClickOutside = () => {
-      if (showPhoneMenu) {
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.phone-item')) {
         setShowPhoneMenu(false);
       }
     };
@@ -83,10 +91,9 @@ function MyCV({ data }: MyCVProps) {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [showPhoneMenu]);
+  }, []);
 
-
-return (
+  return (
     <div className="cv-container">
       <div className="cv-grid">
         <div className="doc-name">{docName}</div>
@@ -140,11 +147,15 @@ return (
               </div>
               <div className="contact-content">
                 <strong>Тел.</strong>
-                <span>+7 (916) 287-89-06</span>
-                <span className="contact-hint">Нажмите для выбора способа звонка</span>
+                <span>{personalInfo.contacts.find(c => c.type === "Тел.")?.value}</span>
+                <span className="contact-hint">
+                  {/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) 
+                    ? 'Позвонить' 
+                    : 'Копировать номер'}
+                </span>
               </div>
               {showPhoneMenu && (
-                <div className="phone-menu">
+                <div className="phone-menu" onClick={(e) => e.stopPropagation()}>
                   <div className="phone-menu-item" onClick={() => handleCall('mobile')}>
                     <FaPhone /> Позвонить с телефона
                   </div>
@@ -154,46 +165,29 @@ return (
 
             <div className="contact-item" onClick={handleWhatsAppClick}>
               <div className="contact-icon whatsapp">
-                <IconContext.Provider 
-                  value={{ 
-                    color: "#25D366", 
-                    className: "global-class-name",
-                    size: "2.5em"
-                  }}>
-                  <div>
-                    <FaWhatsapp />
-                  </div>
-                </IconContext.Provider>;
+                <IconContext.Provider value={{ color: "#25D366", size: "2.5em" }}>
+                  <FaWhatsapp />
+                </IconContext.Provider>
               </div>
               <div className="contact-content">
                 <strong>WhatsApp</strong>
-                <span>+90 (533) 145-84-81</span>
+                <span>{personalInfo.contacts.find(c => c.type === "WhatsApp")?.value}</span>
                 <span className="contact-hint">Открыть в WhatsApp</span>
               </div>
             </div>
 
             <div className="contact-item" onClick={handleTelegramClick}>
               <div className="contact-icon telegram">
-                <IconContext.Provider 
-                  value={{ 
-                    color: "#0088cc",
-                    className: "global-class-name",
-                    size: "2.5em"
-                  }}>
-                  <div>
-                    <FaTelegram />
-                  </div>
-                </IconContext.Provider>;
+                <IconContext.Provider value={{ color: "#0088cc", size: "2.5em" }}>
+                  <FaTelegram />
+                </IconContext.Provider>
               </div>
-              
               <div className="contact-content">
                 <strong>Telegram</strong>
-                <span>@SummerSunny20100</span>
+                <span>{personalInfo.contacts.find(c => c.type === "Telegramm")?.value}</span>
                 <span className="contact-hint">Открыть в Telegram</span>
               </div>
             </div>
-
-
 
             <div className="contact-item" onClick={handleMaxClick}>
               <div 
@@ -209,30 +203,20 @@ return (
               />
               <div className="contact-content">
                 <strong>MAX</strong>
-                <span>+7 (916) 287-89-06</span>
+                <span>{personalInfo.contacts.find(c => c.type === "MAX")?.value}</span>
                 <span className="contact-hint">Открыть в MAX</span>
               </div>
             </div>
 
-
-
-
             <div className="contact-item" onClick={handleEmailClick}>
               <div className="contact-icon email">
-                <IconContext.Provider 
-                  value={{ 
-                    color: "#EA4335",
-                    className: "global-class-name",
-                    size: "2.5em"
-                  }}>
-                  <div>
-                    <FaEnvelope />
-                  </div>
-                </IconContext.Provider>;
+                <IconContext.Provider value={{ color: "#EA4335", size: "2.5em" }}>
+                  <FaEnvelope />
+                </IconContext.Provider>
               </div>
               <div className="contact-content">
                 <strong>E-mail</strong>
-                <span>bulati4@mail.ru</span>
+                <span>{personalInfo.contacts.find(c => c.type === "E-mail")?.value}</span>
                 <span className="contact-hint">Написать письмо</span>
               </div>
             </div>
@@ -269,11 +253,11 @@ return (
                   <div className="experience-company">{exp.company}, {exp.location}</div>
                 </div>
                 <div className="experience-position">{exp.position}</div>
-                <div className="responsibilities-grid">
+                <ul className="responsibilities-grid">
                   {exp.responsibilities.map((resp, i) => (
-                    <div key={i} className="responsibility-item">{resp}</div>
+                    <li key={i} className="responsibility-item">{resp}</li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
           </div>
@@ -285,7 +269,20 @@ return (
             {trainings.map((training, idx) => (
               <div key={idx} className="training-item">
                 <div className="training-date">{training.date}</div>
-                <div className="training-name">{training.name}</div>
+                <div className="training-name">
+                  {training.name}
+                  {training.certificateUrl && (
+                    <a 
+                      href={training.certificateUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="certificate-link"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {training.certificateText || 'Сертификат'}
+                    </a>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -296,20 +293,20 @@ return (
           <div className="additional-info-grid">
             <div className="info-section">
               <h3>Навыки</h3>
-              <div className="skills-grid">
+              <ul className="skills-grid">
                 {additionalInfo.skills.map((skill, idx) => (
-                  <div key={idx} className="skill-item">{skill}</div>
+                  <li key={idx} className="skill-item">{skill}</li>
                 ))}
-              </div>
+              </ul>
             </div>
             
             <div className="info-section">
               <h3>Достижения</h3>
-              <div className="skills-grid">
+              <ul className="skills-grid">
                 {additionalInfo.achievements.map((achievement, idx) => (
-                  <div key={idx} className="skill-item">{achievement}</div>
+                  <li key={idx} className="skill-item">{achievement}</li>
                 ))}
-              </div>
+              </ul>
             </div>
             
             <div className="info-section">
@@ -324,11 +321,11 @@ return (
             
             <div className="info-section">
               <h3>Личные качества</h3>
-              <div className="qualities-grid">
+              <ul className="qualities-grid">
                 {additionalInfo.personalQualities.map((quality, idx) => (
-                  <div key={idx} className="quality-item">{quality}</div>
+                  <li key={idx} className="quality-item">{quality}</li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
         </div>

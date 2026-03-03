@@ -9,19 +9,19 @@
       "contacts": [
         {
           "type": "Тел.",
-          "value": "+90(533)145-84-81"
+          "value": "+7(916)287-89-06"
         },
         {
           "type": "WhatsApp",
-          "value": "+90(533)145-84-81"
+          "value": "+7(916)287-89-06"
         },
         {
           "type": "Telegramm",
-          "value": "+90(533)145-84-81"
+          "value": "@SummerSunny20100"
         },
         {
           "type": "MAX",
-          "value": "+90(533)145-84-81"
+          "value": "+7(916)287-89-06"
         },
         {
           "type": "E-mail",
@@ -135,12 +135,22 @@
     ],
     "trainings": [
       {
+        "date": "02.03.2026",
+        "name": "Excel Power Query и Pivot (+BI): с 0 до бизнес-пользователя, образовательная платформа Stepik",
+        "certificateUrl": "https://stepik.org/cert/3153774",
+        "certificateText": "Посмотреть"
+      },
+      {
         "date": "04.08.2025",
-        "name": "Информационные системы в экономике. Работа с СУБД MS Access, образовательная платформа Stepik"
+        "name": "Информационные системы в экономике. Работа с СУБД MS Access, образовательная платформа Stepik",
+        "certificateUrl": "https://stepik.org/cert/2928820",
+        "certificateText": "Посмотреть"
       },
       {
         "date": "25.04.2025",
-        "name": "Excel VBA – Программирование макросов в Excel, образовательная платформа Stepik"
+        "name": "Excel VBA – Программирование макросов в Excel, образовательная платформа Stepik",
+        "certificateUrl": "https://stepik.org/cert/2831915",
+        "certificateText": "Посмотреть"
       },
       {
         "date": "24.09.2024 – 26.09.2024",
@@ -186,6 +196,7 @@
         }
       ],
       "personalQualities": [
+        "прагматичность",
         "системность мышления",
         "ответственность",
         "честность",

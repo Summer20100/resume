@@ -32,6 +32,8 @@ export interface ResumeData {
     trainings: Array<{
       date: string;
       name: string;
+      certificateUrl: string;
+      certificateText: string
     }>;
     additionalInfo: {
       skills: string[];
