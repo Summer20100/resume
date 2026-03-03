@@ -6,6 +6,9 @@ export interface ResumeData {
       birthDate: string;
       maritalStatus: string;
       location: string;
+      profile: string;
+      status: string;
+      statusPhoto: string;
       contacts: Array<{
         type: string;
         value: string;

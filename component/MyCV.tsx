@@ -15,7 +15,7 @@ interface MyCVProps {
 
 function MyCV({ data }: MyCVProps) {
   const { resume } = data;
-  const { docName, personalInfo, education, workExperience, trainings, additionalInfo } = resume;
+  const { personalInfo, education, workExperience, trainings, additionalInfo } = resume;
   const [showPhoneMenu, setShowPhoneMenu] = useState(false);
 
   // Контактные данные из personalInfo
@@ -96,7 +96,6 @@ const handleEmailClick = () => {
   return (
     <div className="cv-container">
       <div className="cv-grid">
-        <div className="doc-name">{docName}</div>
         
         <div className="cv-card personal-section">
           <div className="profile-header">
@@ -106,12 +105,12 @@ const handleEmailClick = () => {
                 alt={personalInfo.fullName}
                 className="profile-photo"
               />
-              <div className="photo-badge">Доступен для работы</div>
+              <div className="photo-badge">{personalInfo.statusPhoto}</div>
             </div>
             
             <div className="profile-info">
               <h1 className="full-name">{personalInfo.fullName}</h1>
-              <div className="profile-title">Специалист по управлению проектами АЭС</div>
+              <div className="profile-title">{personalInfo.profile}</div>
               
               <div className="personal-details-grid">
                 <div className="personal-detail-item">
@@ -128,7 +127,7 @@ const handleEmailClick = () => {
                 </div>
                 <div className="personal-detail-item">
                   <strong>Статус</strong>
-                  <span className="status-available">Ищу новые возможности</span>
+                  <span className="status-available">{personalInfo.status}</span>
                 </div>
               </div>
             </div>
@@ -143,7 +142,7 @@ const handleEmailClick = () => {
           <div className="contacts-grid">
             <div className="contact-item phone-item" onClick={handlePhoneClick}>
               <div className="contact-icon">
-                <FaPhone />
+                <FaPhone color="var(--neutral-dark)" />
               </div>
               <div className="contact-content">
                 <strong>Тел.</strong>
@@ -271,17 +270,20 @@ const handleEmailClick = () => {
                 <div className="training-date">{training.date}</div>
                 <div className="training-name">
                   {training.name}
-                  {training.certificateUrl && (
-                    <a 
-                      href={training.certificateUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="certificate-link"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {training.certificateText || 'Сертификат'}
-                    </a>
-                  )}
+                  <div>
+                    {training.certificateUrl && (
+                      <a 
+                        href={training.certificateUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="certificate-link"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {training.certificateText || 'Сертификат'}
+                      </a>
+                    )}
+                  </div>
+                  
                 </div>
               </div>
             ))}

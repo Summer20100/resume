@@ -8,6 +8,17 @@
   box-sizing: border-box;
 }
 
+/* Корневой элемент без отступов */
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--neutral-offwhite);
+}
+
 :root {
   /* Новая цветовая палитра - благородная и современная */
   --primary-dark: #1A2A3A;       /* Глубокий темно-синий для заголовков */
@@ -44,15 +55,17 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--neutral-offwhite);
+  min-height: 100vh;
 }
 
 /* ===== Основной контейнер ===== */
 .cv-container {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 24px;
-  background: var(--neutral-offwhite);
-  min-height: 100vh;
+  background: transparent;
+  min-height: auto;
+  width: 100%;
+  padding: 40px 20px;
 }
 
 /* ===== Сетка ===== */
@@ -238,7 +251,7 @@ body {
 /* ===== Контакты ===== */
 .contacts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 16px;
   margin-top: 24px;
   padding-top: 24px;
@@ -292,40 +305,51 @@ body {
   font-size: 1.4rem;
   color: white;
   flex-shrink: 0;
-  background: var(--primary-base) !important; /* Унифицируем цвет иконок */
 }
 
 .contact-item:hover .contact-icon {
-  background: var(--primary-dark) !important;
+  color: var(--primary-dark);
 }
 
 .contact-content {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
 
 .contact-content strong {
   display: block;
   color: var(--neutral-medium);
   font-weight: 500;
-  margin-bottom: 2px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.4px;
+  line-height: 1.2;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  width: 100%;
 }
 
 .contact-content span {
   display: block;
   color: var(--neutral-dark);
-  font-size: 1rem;
+  font-size: 1.0rem;
   font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  width: 100%;
 }
 
 .contact-hint {
   font-size: 0.7rem !important;
   color: var(--neutral-medium) !important;
   font-weight: 400 !important;
-  margin-top: 2px !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  width: 100% !important;
 }
 
 /* Телефонное меню (без изменений, оно функционально) */
@@ -376,6 +400,7 @@ body {
   font-weight: 500;
   color: var(--primary-base);
   font-size: 1rem;
+  text-align: left;
 }
 
 .education-content h3 {
@@ -389,6 +414,7 @@ body {
   margin-top: 12px;
   padding-left: 0;
   border-left: none;
+  text-align: left;
 }
 
 .education-details p {
@@ -450,6 +476,11 @@ body {
   border-left: none;
   font-size: 1.1rem;
   font-style: normal;
+  text-align: left;
+}
+
+.experience-position::first-letter {
+  text-transform: uppercase;
 }
 
 /* Список достижений (ВАЖНО: акцент на результат) */
@@ -530,11 +561,12 @@ body {
   font-size: 0.95rem;
   font-weight: 500;
   flex: 1;
+  text-align: left;
 }
 
 .certificate-link {
   display: inline-block;
-  margin-left: 8px;
+  margin-top: 8px;
   padding: 4px 10px;
   background: var(--primary-light);
   color: var(--primary-base);
@@ -589,18 +621,27 @@ body {
   color: var(--neutral-dark);
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  text-align: left;
 }
 
-.skill-item::after {
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-warm);
-  margin-left: 8px;
-  opacity: 0.5;
+.skill-item::before {
+  content: "▹"; /* Более современный маркер */
+  left: 0;
+  top: 0;
+  color: var(--accent-warm);
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: transform var(--transition-fast);
+  margin-right: 8px;
+}
+
+.skill-item:hover::before{
+  transform: translateX(3px);
+  color: var(--primary-base);
+}
+
+.skill-item:hover {
+  background: transparent;
 }
 
 .language-item {
@@ -713,12 +754,25 @@ body {
 
 /* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 1024px) {
-  .cv-container { padding: 30px 20px; }
   .cv-card { padding: 28px; }
   .full-name { font-size: 2.4rem; }
 }
 
 @media (max-width: 768px) {
+  /* Стили для photo-badge на планшете */
+  .photo-badge {
+    padding: 8px;
+    font-size: 0.75rem;
+  }
+
+  /* Уменьшаем все заголовки на 0.2rem */
+  h1, .h1, .full-name { font-size: 2.2rem; } /* было 2.4rem */
+  h2, .h2, .section-title { font-size: 1.6rem; } /* было 1.8rem */
+  h3, .h3, .experience-company, .education-content h3, .info-section h3 { font-size: 1.1rem; } /* было 1.3rem, 1.2rem, 1.2rem */
+  h4, .h4, .experience-position { font-size: 0.9rem; } /* было 1.1rem */
+  h5, .h5 { font-size: 0.8rem; } /* был 1.0rem если использовался */
+  h6, .h6 { font-size: 0.7rem; } /* был 0.9rem если использовался */
+
   .profile-header {
     grid-template-columns: 1fr;
     gap: 24px;
@@ -729,13 +783,12 @@ body {
     height: 180px;
   }
   
-  .full-name { font-size: 2rem; text-align: center; }
+  .full-name { text-align: center; }
   .profile-title { text-align: center; }
   
   .personal-details-grid { grid-template-columns: 1fr; }
   
   .cv-card { padding: 24px; }
-  .section-title { font-size: 1.6rem; }
   
   .experience-header {
     grid-template-columns: 1fr;
@@ -752,16 +805,60 @@ body {
   .trainings-grid { grid-template-columns: 1fr; }
   .additional-info-grid { grid-template-columns: 1fr; }
   .qualities-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Уменьшение шрифта для планшета */
+  .responsibility-item,
+  .skill-item,
+  .language-item,
+  .quality-item,
+  .training-name,
+  .training-date,
+  .certificate-link,
+  .education-details p,
+  .contact-content span,
+  .contact-hint,
+  .personal-detail-item span,
+  .profile-title,
+  .experience-period {
+    font-size: 0.9rem;
+  }
+
+  .experience-period {
+    text-align: left;
+  }
 }
 
 @media (max-width: 600px) {
-  .cv-container { padding: 20px 12px; }
+  /* Стили для photo-badge на телефоне - как в запросе */
+  .photo-badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px);
+    background: rgba(42, 63, 110, 0.9);
+  }
+
+  /* Уменьшаем все заголовки еще на 0.2rem для телефона */
+  h1, .h1, .full-name { font-size: 2.0rem; } /* было 2.2rem */
+  h2, .h2, .section-title { font-size: 1.4rem; } /* было 1.6rem */
+  h3, .h3, .experience-company, .education-content h3, .info-section h3 { font-size: 0.9rem; } /* было 1.1rem */
+  h4, .h4, .experience-position { font-size: 0.8rem; } /* было 0.9rem */
+  h5, .h5 { font-size: 0.7rem; } /* был 0.8rem */
+  h6, .h6 { font-size: 0.6rem; } /* был 0.7rem */
+
+  .cv-container { 
+    padding: 20px 20px;
+  }
   .cv-card { padding: 20px; }
-  .full-name { font-size: 1.8rem; }
   .profile-title { font-size: 1.1rem; }
   
-  .responsibility-item { font-size: 0.9rem; }
-  .section-title { font-size: 1.4rem; }
   .qualities-grid { grid-template-columns: 1fr; }
   
   .training-item { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -775,5 +872,27 @@ body {
     transform: translateY(-50%);
     max-height: 70vh;
     overflow-y: auto;
+  }
+
+  /* Уменьшение шрифта для телефона */
+  .responsibility-item,
+  .skill-item,
+  .language-item,
+  .quality-item,
+  .training-name,
+  .training-date,
+  .certificate-link,
+  .education-details p,
+  .education-period,
+  .contact-hint,
+  .personal-detail-item span,
+  .profile-title,
+  .experience-period {
+    font-size: 0.7rem;
+  }
+
+  .profile-title{
+    font-size: 1.1rem;
+    font-weight: 500;
   }
 }

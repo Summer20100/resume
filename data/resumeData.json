@@ -2,10 +2,13 @@
   "resume": {
     "docName": "Резюме",
     "personalInfo": {
+      "statusPhoto": "Доступен для работы",
       "fullName": "Булатов Дмитрий Владимирович",
       "birthDate": "21.01.1984",
       "maritalStatus": "женат",
       "location": "Турецкая Республика",
+      "profile": "Эксперт по управлению проектами",
+      "status": "Ищу новые возможности",
       "contacts": [
         {
           "type": "Тел.",
