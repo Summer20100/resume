@@ -6,8 +6,6 @@ import { useState } from 'react';
 // Импортируем иконки (установите react-icons: npm install react-icons)
 import { FaPhone, FaWhatsapp, FaTelegram, FaEnvelope, FaFileDownload } from 'react-icons/fa';
 
-import { SiViber } from 'react-icons/si';
-
 import { IconContext } from "react-icons";
 
 import profilePhoto from '../src/photo/photo.jpg';
