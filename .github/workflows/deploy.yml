@@ -31,6 +31,6 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "build/*"
+          source: "dist/*"
           target: "/var/www/cv.summersunny20100/html"
           strip_components: 1
